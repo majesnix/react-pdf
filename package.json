@@ -14,6 +14,7 @@
     "watch": "lerna run watch --parallel",
     "bootstrap": "lerna bootstrap",
     "prepublish": "lerna run build",
+    "postinstall": "lerna run build",
     "lint": "eslint packages",
     "test": "jest"
   },

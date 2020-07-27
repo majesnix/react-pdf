@@ -3,7 +3,7 @@ const IGNORABLE_CODEPOINTS = [
   8233, // PARAGRAPH_SEPARATOR
 ];
 
-const buildSubsetForFont = font =>
+const buildSubsetForFont = (font) =>
   IGNORABLE_CODEPOINTS.reduce((acc, codePoint) => {
     if (font.hasGlyphForCodePoint && font.hasGlyphForCodePoint(codePoint)) {
       return acc;
@@ -11,8 +11,13 @@ const buildSubsetForFont = font =>
     return [...acc, String.fromCharCode(codePoint)];
   }, []);
 
-const ignoreChars = fragments =>
-  fragments.map(fragment => {
+const ignoreChars = (fragments) =>
+  fragments.map((fragment) => {
+    if (!fragment) return;
+    if (fragment.string === '') {
+      fragment.string = ' ';
+      fragment.attributes = { font: 'Helvetica', color: 'black' };
+    }
     const charSubset = buildSubsetForFont(fragment.attributes.font);
     const subsetRegex = new RegExp(charSubset.join('|'));
 
